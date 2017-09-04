@@ -8,7 +8,7 @@ defmodule Jrc.Report do
     report_url(path)
     |> HTTPoison.get(header(username, password))
     |> handle_response
-    |> preffify
+    |> prettify
   end
 
   def report_url(path) do
@@ -20,7 +20,6 @@ defmodule Jrc.Report do
   end
 
   def handle_response({ _, %{status_code: _, body: body}}) do
-    IO.inspect body
     { :error, Poison.Parser.parse!(body) }
   end
 
@@ -36,7 +35,7 @@ defmodule Jrc.Report do
   def prettify({:ok, content}), do: content
   def preffify({:error, content}) do
     {_, message} = List.keyfind(content, "message", 0)
-    IO.puts "Error fetching from jira: #{message}"
+    IO.inspect "Error fetching from jira: #{message}"
     System.halt(2)
   end
 

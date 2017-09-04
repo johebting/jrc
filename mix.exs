@@ -14,7 +14,8 @@ defmodule Jrc.Mixfile do
      description: @description,
      package: package(),
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     escript: escript()]
   end
 
   # Run "mix help compile.app" to learn about applications.
@@ -32,5 +33,9 @@ defmodule Jrc.Mixfile do
     [maintainers: ["Joseph Hebting"],
      licenses: ["GPLv3"],
      links: %{ "Github" => "https://github.com/johebting/jrc" }]
+  end
+
+  defp escript do
+    [main_module: Jrc.CLI]
   end
 end

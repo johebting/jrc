@@ -9,10 +9,11 @@ defmodule Jrc.CLI do
   summary of your Jira inputs.
   """
 
-  def run(argv) do
+  def main(argv) do
     argv
     |> parse_args
     |> process
+    |> IO.inspect
   end
 
   @doc """
