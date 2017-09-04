@@ -1,21 +1,30 @@
-# Jrc
+# JRC
 
-**TODO: Add description**
+CLI client to fetch JIRA worklog - written in Elixir.
+
+**JRC** stands for : **J**IRA **R**eport **C**lient
 
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 by adding `jrc` to your list of dependencies in `mix.exs`:
 
-```elixir
-def deps do
-  [
-    {:jrc, "~> 0.1.0"}
-  ]
-end
+First, clone the project:
+```bash
+git clone git@github.com:johebting/jrc.git
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/jrc](https://hexdocs.pm/jrc).
+Then, generate the executable file:
 
+```bash
+mix escript.build
+```
+
+This should create a `jrc` file in your project folder.
+
+# Usage
+
+For the moment, you can only fetch result by passing server path and credentials by arguments :
+```bash
+$ jrc "jira.host.com" "username" "password"
+```
