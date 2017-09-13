@@ -14,8 +14,12 @@ First, clone the project:
 git clone git@github.com:johebting/jrc.git
 ```
 
-Then, generate the executable file:
+Make sure you have a recent version of `elixir` and get project dependencies:
+```bash
+mix deps.get
+```
 
+Then, generate the executable file:
 ```bash
 mix escript.build
 ```
