@@ -4,19 +4,27 @@ defmodule Jrc.Report do
   @accept       [ "accept": "*/*" ]
   @base_header  @content_type ++ @accept
 
-  def fetch(path, username, password, project) do
-    report_url(path, username, project)
-    |> HTTPoison.get(header(username, password))
-    |> handle_response
-    |> prettify(username)
+  def fetch(path, username, password, project, days_count) do
+    limit_date = get_limit_date(days_count)
+
+    report_url(path, username, limit_date, project)
+      |> HTTPoison.get(header(username, password))
+      |> handle_response
+      |> prettify(username)
   end
 
-  def report_url(path, username, project \\ :all_project)
-  def report_url(path, username, :all_project) do
-    "https://#{path}/rest/api/2/search?maxResults=10000&fields=worklog,timetracking&jql=worklogAuthor%3D#{username}"
+  def get_limit_date(days_count) do
+    Date.utc_today
+      |> Date.add(-days_count)
+      |> Date.to_string
   end
-  def report_url(path, username, project) do 
-    report_url(path, username, :all_project) <> "%20AND%20project%3D#{project}"
+
+  def report_url(path, username, limit_date, project \\ :all_project)
+  def report_url(path, username, limit_date, :all_project) do
+    "https://#{path}/rest/api/2/search?maxResults=10000&fields=worklog,timetracking&jql=worklogAuthor%3D#{username}%20AND%20worklogDate%20>%3D%20#{limit_date}"
+  end
+  def report_url(path, username, limit_date, project) do 
+    report_url(path, username, limit_date, :all_project) <> "%20AND%20project%3D#{project}"
   end
 
   def handle_response({ :ok, %{status_code: 200, body: body}}) do

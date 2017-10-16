@@ -59,8 +59,8 @@ defmodule Jrc.CLI do
     System.halt(0)
   end
 
-  def process({path, username, password, project, _days_count}) do
-    Jrc.Report.fetch(path, username, password, project)
+  def process({path, username, password, project, days_count}) do
+    Jrc.Report.fetch(path, username, password, project, days_count)
   end
 
 end
