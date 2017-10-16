@@ -28,7 +28,16 @@ This should create a `jrc` file in your project folder.
 
 # Usage
 
-For the moment, you can only fetch result by passing server path and credentials by arguments :
+You can fetch result by passing server path and credentials by arguments :
 ```bash
-$ jrc "jira.host.com" "username" "password"
+$ jrc --path "jira.host.com" --username "username" --password "password"
+```
+Or by editing the `config/config.exs` file :
+```bash
+config :jrc, 
+  jira_path: "jira.host.com",
+  username: "username",
+  password: "password",
+  default_project: :all_project,
+  default_days_count: 7
 ```

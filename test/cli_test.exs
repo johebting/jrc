@@ -9,15 +9,12 @@ defmodule CliTest do
         assert parse_args(["--help", "anything"]) == :help
     end
     test "only path, user and password parameters given" do
-        assert parse_args(["jira.netapsys.fr", "username", "password"]) == { "jira.netapsys.fr", "username", "password", 7, :all_project }
+        assert parse_args(["--path", "jira.evilcorp.com", "--username", "toto", "--password", "azerty"]) == { "jira.evilcorp.com", "toto", "azerty", :all_project, 7 }
     end
-    test "only path, user, password and days_count parameters given" do
-        assert parse_args(["jira.netapsys.fr", "username", "password", "3"]) == { "jira.netapsys.fr", "username", "password", 3, :all_project }
+    test "only days and project parameters given" do
+        assert parse_args(["--days", "60", "--project", "linux"]) == { "jira.domain.com", "username", "password", "linux", 60 }
     end
-    test "every parameters given" do
-        assert parse_args(["jira.netapsys.fr", "username", "password", "4", "project"]) == { "jira.netapsys.fr", "username", "password", 4, "project" }
+    test "only no parameters given" do
+        assert parse_args([]) == { "jira.domain.com", "username", "password", :all_project, 7 }
     end
-    #test "count is defaulted if two values given" do
-    #    assert parse_args(["user", "project"]) == { "user", "project", 4 }
-    #end
 end
