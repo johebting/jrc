@@ -1,4 +1,7 @@
 defmodule Jrc.Report do
+  @module_doc """
+  Format request for JIRA API, and fetch response
+  """
 
   @content_type [ "Content-Type": "application/json" ]
   @accept       [ "accept": "*/*" ]

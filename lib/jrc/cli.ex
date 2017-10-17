@@ -1,5 +1,4 @@
 defmodule Jrc.CLI do
-
   @module_doc """
   Handle the command line parsing and the dispatch to
   the various functions that end up genearting a

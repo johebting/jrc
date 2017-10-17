@@ -2,7 +2,7 @@ defmodule Jrc.Mixfile do
   use Mix.Project
 
   @description """
-    CLI client to fetch JIRA worklog
+  CLI client to fetch JIRA worklog
   """
 
   @version File.read!("VERSION") |> String.trim
