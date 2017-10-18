@@ -20,7 +20,7 @@ defmodule Jrc.Mixfile do
 
   # Run "mix help compile.app" to learn about applications.
   def application do
-    [extra_applications: [:logger]]
+    [extra_applications: [:logger, :table_rex]]
   end
 
   # Run "mix help deps" to learn about dependencies.
@@ -29,7 +29,8 @@ defmodule Jrc.Mixfile do
      { :timex, "~> 3.1"},
      # Because tzdata > 0.1.8 cannot be embedded with escript
      {:tzdata, "== 0.1.8", override: true},
-     { :poison, "~> 3.1"}]
+     { :poison, "~> 3.1"},
+     {:table_rex, "~> 0.10"}]
   end
 
   defp package do
