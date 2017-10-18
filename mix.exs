@@ -2,7 +2,7 @@ defmodule Jrc.Mixfile do
   use Mix.Project
 
   @description """
-    CLI client to fetch JIRA worklog
+  CLI client to fetch JIRA worklog
   """
 
   @version File.read!("VERSION") |> String.trim
@@ -20,13 +20,17 @@ defmodule Jrc.Mixfile do
 
   # Run "mix help compile.app" to learn about applications.
   def application do
-    [extra_applications: [:logger]]
+    [extra_applications: [:logger, :table_rex]]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [{ :httpoison, "~> 0.13"},
-     { :poison, "~> 3.1"}]
+     { :timex, "~> 3.1"},
+     # Because tzdata > 0.1.8 cannot be embedded with escript
+     {:tzdata, "== 0.1.8", override: true},
+     { :poison, "~> 3.1"},
+     {:table_rex, "~> 0.10"}]
   end
 
   defp package do

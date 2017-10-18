@@ -1,6 +1,5 @@
 defmodule Jrc.CLI do
-
-  @module_doc """
+  @moduledoc """
   Handle the command line parsing and the dispatch to
   the various functions that end up genearting a
   summary of your Jira inputs.
@@ -10,7 +9,6 @@ defmodule Jrc.CLI do
     argv
     |> parse_args
     |> process
-    |> IO.inspect
   end
 
   @doc """
@@ -20,21 +18,20 @@ defmodule Jrc.CLI do
   Return a tuple of `{ path, username, password, days_count, project }`, or `:help` if help was given.
   """
   def parse_args(argv) do
-    parse = OptionParser.parse(argv, switches: [ help: :boolean],
-                                     aliases:  [ h:    :help   ])
+    parse = OptionParser.parse(argv, switches: [help: :boolean], aliases: [h: :help])
     
     case parse do
-      { [ help: true ], _, _ }
+      {[help: true], _, _}
         -> :help
 
-      { a, _, _ } ->
+      {a, _, _} ->
         path = a[:path] || Application.get_env(:jrc, :jira_path)
         username = a[:username] || Application.get_env(:jrc, :username)
         password = a[:password] || Application.get_env(:jrc, :password)
         project = a[:project] || Application.get_env(:jrc, :default_project)
         brut_days_count = a[:days] || Application.get_env(:jrc, :default_days_count)
         days_count =
-          if (String.valid?(brut_days_count)) do
+          if String.valid?(brut_days_count) do
             String.to_integer(brut_days_count)
           else
             brut_days_count
@@ -59,8 +56,8 @@ defmodule Jrc.CLI do
     System.halt(0)
   end
 
-  def process({path, username, password, project, _days_count}) do
-    Jrc.Report.fetch(path, username, password, project)
+  def process({path, username, password, project, days_count}) do
+    Jrc.Report.fetch(path, username, password, project, days_count)
   end
 
 end
