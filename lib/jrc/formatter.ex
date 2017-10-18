@@ -1,5 +1,5 @@
 defmodule Jrc.Formatter do
-  @module_doc """
+  @moduledoc """
   Format the JIRA API response, as a Map with date as keys, and Maps as values.
   Those sub-Maps contains time spent per issue (in hours).
   """
@@ -15,20 +15,24 @@ defmodule Jrc.Formatter do
       issue
       |> get_user_worklogs(user)
       |> Enum.reduce(tree, fn(worklog, pop_tree) -> 
-        worklog_date = get_worklog_date(worklog)
-        hours_spent = get_hours_spent(worklog)
-
-        pop_tree
-        |> Map.put_new(worklog_date, %{})
-        |> Map.update!(worklog_date, fn(date_row) ->
-          date_row
-          |> Map.put_new(issue_key, 0)
-          |> Map.update!(issue_key, &(&1 + hours_spent))
-        end)
+        populate_with_worklog(pop_tree, worklog, issue_key)
       end)
     end)
   end
-  
+
+  def populate_with_worklog(tree, worklog, issue) do
+    worklog_date = get_worklog_date(worklog)
+    hours_spent = get_hours_spent(worklog)
+
+    tree
+    |> Map.put_new(worklog_date, %{})
+    |> Map.update!(worklog_date, fn(date_row) ->
+      date_row
+      |> Map.put_new(issue, 0)
+      |> Map.update!(issue, &(&1 + hours_spent))
+    end)
+  end
+
   @doc """
   Get a Map full of user's worklogs of an issue
   """
@@ -70,5 +74,4 @@ defmodule Jrc.Formatter do
     |> DateTime.to_date
     |> Date.to_string
   end
-
 end
