@@ -45,7 +45,8 @@ defmodule Jrc.Report do
     @base_header ++ ["Authorization": "Basic #{auth}"]
   end
 
-  def prettify({:ok, content}, username), do: content |> Map.get("issues", %{}) |> Jrc.Formatter.format_report(username)
+  def prettify({:ok, content}, username), 
+    do: content |> Map.get("issues", %{}) |> Jrc.Formatter.format_report(username) |> Jrc.Tableizer.tableize
   def preffify({:error, content}) do
     {_, message} = List.keyfind(content, "message", 0)
     IO.puts "Error fetching from jira: #{message}"
