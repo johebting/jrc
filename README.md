@@ -39,5 +39,6 @@ config :jrc,
   username: "username",
   password: "password",
   default_project: :all_project,
-  default_days_count: 7
+  default_days_count: 7,
+  max_daily_input: 8
 ```

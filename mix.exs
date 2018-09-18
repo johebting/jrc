@@ -28,7 +28,7 @@ defmodule Jrc.Mixfile do
     [{ :httpoison, "~> 0.13"},
      { :timex, "~> 3.1"},
      # Because tzdata > 0.1.8 cannot be embedded with escript
-     {:tzdata, "== 0.1.8", override: true},
+     {:tzdata, "~> 0.1.8", override: true},
      { :poison, "~> 3.1"},
      {:table_rex, "~> 0.10"}]
   end
